@@ -1,0 +1,314 @@
+import { useEffect, useRef } from 'react';
+import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { useLanguage } from '@/context/LanguageContext';
+import { translations } from '@/translations';
+
+gsap.registerPlugin(ScrollTrigger);
+
+function FacebookIcon() {
+  return (
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+      <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" />
+    </svg>
+  );
+}
+
+function InstagramIcon() {
+  return (
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+      <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z" />
+    </svg>
+  );
+}
+
+function YouTubeIcon() {
+  return (
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+      <path d="M23.498 6.186a3.016 3.016 0 00-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 00.502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 002.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 002.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z" />
+    </svg>
+  );
+}
+
+function TwitterIcon() {
+  return (
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+      <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
+    </svg>
+  );
+}
+
+export default function Footer() {
+  const { lang, dir } = useLanguage();
+  const t = translations[lang];
+  const footerRef = useRef<HTMLElement>(null);
+
+  const scrollToSection = (id: string) => {
+    const el = document.getElementById(id);
+    if (el) el.scrollIntoView({ behavior: 'smooth' });
+  };
+
+  useEffect(() => {
+    const ctx = gsap.context(() => {
+      const cols = footerRef.current?.querySelectorAll('.footer-col');
+      if (cols) {
+        gsap.fromTo(
+          cols,
+          { opacity: 0, y: 20 },
+          {
+            opacity: 1,
+            y: 0,
+            duration: 0.6,
+            stagger: 0.1,
+            scrollTrigger: {
+              trigger: footerRef.current,
+              start: 'top 90%',
+              toggleActions: 'play none none none',
+            },
+          }
+        );
+      }
+    }, footerRef);
+
+    return () => ctx.revert();
+  }, []);
+
+  const linkStyle: React.CSSProperties = {
+    color: 'rgba(255,255,255,0.5)',
+    textDecoration: 'none',
+    fontSize: '0.875rem',
+    display: 'block',
+    marginBottom: 10,
+    transition: 'color 0.3s ease',
+    cursor: 'pointer',
+    background: 'none',
+    border: 'none',
+    padding: 0,
+    fontFamily: "'Cairo', sans-serif",
+    textAlign: dir === 'rtl' ? 'right' : 'left',
+  };
+
+  return (
+    <footer
+      ref={footerRef}
+      style={{
+        background: '#0E0D0D',
+        padding: '80px 0 40px',
+        fontFamily: "'Cairo', sans-serif",
+        direction: dir,
+      }}
+    >
+      <div
+        style={{
+          maxWidth: 1280,
+          margin: '0 auto',
+          padding: '0 clamp(1.5rem, 4vw, 4rem)',
+          display: 'grid',
+          gridTemplateColumns: 'repeat(4, 1fr)',
+          gap: 40,
+        }}
+        className="footer-grid"
+      >
+        {/* Column 1 - Logo */}
+        <div className="footer-col">
+          <div style={{ display: 'flex', flexDirection: 'column' }}>
+            <span
+              style={{
+                fontSize: '1.5rem',
+                fontWeight: 700,
+                color: '#FFFFFF',
+                lineHeight: 1,
+                letterSpacing: '0.02em',
+              }}
+            >
+              MTC
+            </span>
+            <span
+              style={{
+                fontSize: '0.625rem',
+                fontWeight: 500,
+                letterSpacing: '0.1em',
+                color: 'rgba(255,255,255,0.5)',
+                textTransform: 'uppercase',
+              }}
+            >
+              Modern Teaching Schools
+            </span>
+          </div>
+          <p
+            style={{
+              fontSize: '0.875rem',
+              color: 'rgba(255,255,255,0.5)',
+              maxWidth: 240,
+              marginTop: 16,
+              lineHeight: 1.6,
+            }}
+          >
+            {t.footer.tagline}
+          </p>
+        </div>
+
+        {/* Column 2 - Quick Links */}
+        <div className="footer-col">
+          <div
+            style={{
+              fontSize: '0.875rem',
+              fontWeight: 600,
+              color: '#FFFFFF',
+              marginBottom: 20,
+            }}
+          >
+            {t.footer.quickLinks}
+          </div>
+          {[
+            { label: t.nav.home, id: 'home' },
+            { label: t.nav.about, id: 'about' },
+            { label: t.nav.programs, id: 'programs' },
+            { label: t.nav.gallery, id: 'gallery' },
+            { label: t.nav.contact, id: 'contact' },
+          ].map((link) => (
+            <button
+              key={link.id}
+              onClick={() => scrollToSection(link.id)}
+              style={linkStyle}
+              onMouseEnter={(e) => (e.currentTarget.style.color = '#F1AD44')}
+              onMouseLeave={(e) => (e.currentTarget.style.color = 'rgba(255,255,255,0.5)')}
+            >
+              {link.label}
+            </button>
+          ))}
+        </div>
+
+        {/* Column 3 - Programs */}
+        <div className="footer-col">
+          <div
+            style={{
+              fontSize: '0.875rem',
+              fontWeight: 600,
+              color: '#FFFFFF',
+              marginBottom: 20,
+            }}
+          >
+            {t.footer.programs}
+          </div>
+          {[
+            t.programs.branch1.title,
+            t.programs.branch2.title,
+            t.programs.branch3.title,
+            t.programs.branch4.title,
+            t.programs.branch5.title,
+          ].map((program, i) => (
+            <span key={i} style={{ ...linkStyle, cursor: 'default' }}>
+              {program}
+            </span>
+          ))}
+        </div>
+
+        {/* Column 4 - Social */}
+        <div className="footer-col">
+          <div
+            style={{
+              fontSize: '0.875rem',
+              fontWeight: 600,
+              color: '#FFFFFF',
+              marginBottom: 20,
+            }}
+          >
+            {t.footer.followUs}
+          </div>
+          <div style={{ display: 'flex', gap: 16 }}>
+            {[
+              { icon: <FacebookIcon />, label: 'Facebook' },
+              { icon: <InstagramIcon />, label: 'Instagram' },
+              { icon: <YouTubeIcon />, label: 'YouTube' },
+              { icon: <TwitterIcon />, label: 'Twitter' },
+            ].map((social) => (
+              <a
+                key={social.label}
+                href="#"
+                aria-label={social.label}
+                style={{
+                  color: 'rgba(255,255,255,0.5)',
+                  transition: 'color 0.3s ease',
+                }}
+                onMouseEnter={(e) => (e.currentTarget.style.color = '#F1AD44')}
+                onMouseLeave={(e) => (e.currentTarget.style.color = 'rgba(255,255,255,0.5)')}
+              >
+                {social.icon}
+              </a>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      {/* Bottom bar */}
+      <div
+        style={{
+          maxWidth: 1280,
+          margin: '60px auto 0',
+          padding: '0 clamp(1.5rem, 4vw, 4rem)',
+          borderTop: '1px solid rgba(255,255,255,0.08)',
+          paddingTop: 24,
+          display: 'flex',
+          justifyContent: 'space-between',
+          alignItems: 'center',
+          flexWrap: 'wrap',
+          gap: 12,
+        }}
+      >
+        <span
+          style={{
+            fontFamily: "'IBM Plex Mono', monospace",
+            fontSize: '0.75rem',
+            color: 'rgba(255,255,255,0.3)',
+          }}
+        >
+          {t.footer.copyright}
+        </span>
+        <div style={{ display: 'flex', gap: 24 }}>
+          <a
+            href="#"
+            style={{
+              fontFamily: "'IBM Plex Mono', monospace",
+              fontSize: '0.75rem',
+              color: 'rgba(255,255,255,0.3)',
+              textDecoration: 'none',
+              transition: 'color 0.3s ease',
+            }}
+            onMouseEnter={(e) => (e.currentTarget.style.color = '#F1AD44')}
+            onMouseLeave={(e) => (e.currentTarget.style.color = 'rgba(255,255,255,0.3)')}
+          >
+            {t.footer.privacy}
+          </a>
+          <a
+            href="#"
+            style={{
+              fontFamily: "'IBM Plex Mono', monospace",
+              fontSize: '0.75rem',
+              color: 'rgba(255,255,255,0.3)',
+              textDecoration: 'none',
+              transition: 'color 0.3s ease',
+            }}
+            onMouseEnter={(e) => (e.currentTarget.style.color = '#F1AD44')}
+            onMouseLeave={(e) => (e.currentTarget.style.color = 'rgba(255,255,255,0.3)')}
+          >
+            {t.footer.terms}
+          </a>
+        </div>
+      </div>
+
+      <style>{`
+        @media (max-width: 768px) {
+          .footer-grid {
+            grid-template-columns: repeat(2, 1fr) !important;
+          }
+        }
+        @media (max-width: 480px) {
+          .footer-grid {
+            grid-template-columns: 1fr !important;
+          }
+        }
+      `}</style>
+    </footer>
+  );
+}

@@ -1,0 +1,47 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 30 23% 95%;
+    --foreground: 0 2% 5%;
+    --card: 0 0% 100%;
+    --card-foreground: 0 2% 5%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 0 2% 5%;
+    --primary: 162 45% 13%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 30 23% 95%;
+    --secondary-foreground: 0 2% 5%;
+    --muted: 20 6% 36%;
+    --muted-foreground: 20 6% 36%;
+    --accent: 38 85% 61%;
+    --accent-foreground: 0 2% 5%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 0 2% 5% / 0.08;
+    --input: 0 2% 5% / 0.08;
+    --ring: 162 45% 13%;
+    --radius: 0.5rem;
+    --font-sans: 'Cairo', sans-serif;
+    --font-mono: 'IBM Plex Mono', monospace;
+  }
+
+  body {
+    font-family: var(--font-sans);
+    background-color: #F6F2EE;
+    color: #0E0D0D;
+    overflow-x: hidden;
+  }
+
+  * {
+    @apply border-border;
+  }
+}
+
+@layer utilities {
+  .font-mono {
+    font-family: var(--font-mono);
+  }
+}
